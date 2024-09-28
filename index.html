@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+    .card-header {
+      text-align: center;
+    }
+    .card-header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    .card-content {
+      margin-top: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .language-toggle {
+      cursor: pointer;
+      font-size: 14px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <h1 id="title">Sign In</h1>
+      <div class="language-toggle" onclick="handleLanguageChange()">
+        <span id="globe">🌐</span>
+      </div>
+    </div>
+    <div class="card-content">
+      <form onsubmit="handleSignIn(event)">
+        <div class="form-group">
+          <label for="username" id="usernameLabel">Username</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password" id="passwordLabel">Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <div class="form-group">
+          <label for="role" id="roleLabel">Select Role</label>
+          <select id="role" required>
+            <option value="" disabled selected id="rolePlaceholder">Select Role</option>
+            <option value="prisoner" id="prisoner">Prisoner</option>
+            <option value="judge" id="judge">Judicial Authority</option>
+            <option value="legalAid" id="legalAid">Legal Aid Provider</option>
+          </select>
+        </div>
+        <button type="submit" class="btn" id="signInBtn">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let language = 'en'; // Default language is English
+
+    const translations = {
+      en: {
+        title: 'Sign In',
+        username: 'Username',
+        password: 'Password',
+        role: 'Select Role',
+        signIn: 'Sign In',
+        prisoner: 'Prisoner',
+        judge: 'Judicial Authority',
+        legalAid: 'Legal Aid Provider'
+      },
+      hi: {
+        title: 'साइन इन करें',
+        username: 'उपयोगकर्ता नाम',
+        password: 'पासवर्ड',
+        role: 'भूमिका चुनें',
+        signIn: 'साइन इन करें',
+        prisoner: 'कैदी',
+        judge: 'न्यायिक अधिकारी',
+        legalAid: 'कानूनी सहायता प्रदाता'
+      }
+    };
+
+    function handleLanguageChange() {
+      language = language === 'en' ? 'hi' : 'en';
+      updateTranslations();
+    }
+
+    function updateTranslations() {
+        const t = translations[language];
+        document.getElementById('title').textContent = t.title;
+        document.getElementById('usernameLabel').textContent = t.username;
+        document.getElementById('passwordLabel').textContent = t.password;
+        document.getElementById('roleLabel').textContent = t.role;
+        document.getElementById('rolePlaceholder').textContent = t.role;
+        document.getElementById('prisoner').textContent = t.prisoner;
+        document.getElementById('judge').textContent = t.judge;
+        document.getElementById('legalAid').textContent = t.legalAid;
+        document.getElementById('signInBtn').textContent = t.signIn;
+      }
+  
+      function handleRoleChange() {
+        const selectedRole = document.getElementById('role').value;
+        // Add logic based on role
+        console.log('Selected Role:', selectedRole);
+        // You can perform actions based on the selected role here
+      }
+  
+      function handleSignIn(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const role = document.getElementById('role').value;
+        console.log('Sign in attempt:', { username, password, role });
+  
+        // Redirect or take action based on role
+        if (role === 'prisoner') {
+          // Redirect to prisoner dashboard
+          window.location.href = 'undertrail.html';
+        } else if (role === 'judge') {
+          // Redirect to judge dashboard
+          window.location.href = 'judicial.html';
+        } else if (role === 'legalAid') {
+          // Redirect to legal aid dashboard
+          window.location.href = 'legaaid.html';
+        }
+      }
+  
+      // Initialize the translations when the page loads
+      updateTranslations();
+    </script>
+  
+  </body>
+  </html>

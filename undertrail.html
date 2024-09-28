@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Navbar styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #f8f8f8;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: fixed; /* Fix the navbar at the top */
+      top: 0;
+      width: calc(100% - 200px); /* Reduce width for the sidebar */
+      left: 200px; /* Adjust for the fixed sidebar */
+      z-index: 1000; /* Ensure the navbar stays on top */
+    }
+
+    .navbar h1 {
+      margin: 0;
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .icon {
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      position: fixed; /* Fix the sidebar to the left */
+      top: 0;
+      left: 0;
+      width: 200px; /* Set the width of the sidebar */
+      height: 100%; /* Make the sidebar span the full height */
+      background-color: #60a5fa; /* Sidebar background color */
+      color: #fff;
+      padding-top: 60px; /* Offset for the fixed navbar */
+      z-index: 999; /* Ensure the sidebar stays on top of other elements */
+    }
+
+    .sidebar a {
+      display: block;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+
+    .sidebar a:hover {
+      background-color: #5a9edc; /* Hover effect */
+    }
+
+    /* Main content styles */
+    .main-content {
+      margin-left: 220px; /* Offset to match the sidebar width */
+      padding-top: 80px; /* Offset for the fixed navbar */
+    }
+
+    .dashboard-container {
+      padding-top: 60px; /* Add padding equal to navbar height */
+    }
+
+    .well {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    /* Search icon style in the navbar */
+    .search-icon {
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 50px auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chat Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Chat Body */
+.chat-body {
+  display: flex;
+  flex-direction: row;
+  min-height: auto;
+}
+
+/* Chat List */
+.chat-list {
+  width: 30%;
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.chat-item:hover {
+  background-color: #f0f0f0;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 15px;
+  font-size: 1.2rem;
+}
+
+.chat-details {
+  flex: 1;
+}
+
+.chat-name {
+  font-weight: bold;
+}
+
+.chat-message {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.active {
+  background-color: #e7f1ff;
+}
+
+/* Chat View */
+.chat-view {
+  width: 70%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.message-text {
+  max-width: 60%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.message-time {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: 5px;
+}
+
+/* Messages by Other */
+.message.other .message-text {
+  background-color: #f1f1f1;
+  align-self: flex-start;
+}
+
+/* Messages by User */
+.message.user .message-text {
+  background-color: #007bff;
+  color: white;
+  align-self: flex-end;
+}
+
+/* Chat Input */
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.chat-input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.send-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #0056b3;
+}
+
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" onclick="switchTab('home')"><i class="fas fa-home icon"></i>Home</a>
+      <a href="#" onclick="switchTab('caseDetails')"><i class="fas fa-file-alt icon"></i>Case</a>
+      <a href="#" onclick="switchTab('legalAid')"><i class="fas fa-balance-scale icon"></i>LegalAid</a>
+      <a href="#" onclick="switchTab('chat')"><i class="fas fa-comments icon"></i>Chat</a>
+      <a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt icon"></i>Logout</a>
+    </div>
+    
+
+    <!-- Top Navbar -->
+    <div class="navbar">
+      <h1>Bail Reckoner</h1>
+      <div class="icon-container">
+        <i class="fas fa-search icon search-icon"></i>
+        <i class="fas fa-bell icon" onclick="switchTab('notifications')"></i>
+        <i class="fas fa-user icon" onclick="switchTab('profile')"></i>
+      </div>
+    </div>
+
+   <!-- Main content area -->
+<div class="main-content" id="content">
+  <h1>Welcome to the Undertrial Prisoners Dashboard</h1>
+  
+  <div class="well">
+    <h4>Dashboard Overview</h4>
+    <p>Here you can find important statistics and updates regarding undertrial prisoners.</p>
+  </div>
+  
+  
+  
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="well">
+        <h4>Recent Updates</h4>
+        <p>Update 1: New legal assistance program launched.</p> 
+        <p>Update 2: Counseling services available.</p> 
+        <p>Update 3: Workshops on rights and legal procedures.</p> 
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well">
+        <h4>Important Contacts</h4>
+        <p>Lawyer: John Doe - (123) 456-7890</p> 
+        <p>Legal Aid: Jane Smith - (098) 765-4321</p> 
+        <p>Helpline: 1800-123-4567</p> 
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well">
+        <h4>Upcoming Hearings</h4>
+        <p>Hearing Date: 10th October 2024</p> 
+        <p>Location: Courtroom A</p> 
+        <p>Time: 10:00 AM</p> 
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="well">
+        <h4>Legal Rights Information</h4>
+        <p>Here you can find resources on your legal rights and available support.</p> 
+        <p><a href="#">Learn More</a></p>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="well">
+        <h4>Feedback</h4>
+        <p>Your feedback helps us improve the services.</p>
+        <p><a href="#">Submit Feedback</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <!-- Chatbot toggler -->
+  <button class="chatbot-toggler">
+    <span class="material-symbols-rounded">mode_comment</span>
+    <span class="material-symbols-outlined">close</span>
+  </button>
+  <div class="chatbot">
+    <header>
+      <h2>Bail Reckoner Bot</h2>
+      <span class="close-btn material-symbols-outlined">close</span>
+    </header>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <span class="material-symbols-outlined">smart_toy</span>
+        <p>Hi there 👋<br>How can I help you today?</p>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+      <span id="send-btn" class="material-symbols-rounded">send</span>
+    </div>
+  </div>
+<script>
+  function logout() {
+    // Optional: Add any logout logic here, like clearing user sessions or tokens
+    window.location.href = 'index.html'; // Redirect to the login or home page
+  }
+  
+</script>
+  <script src="index.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

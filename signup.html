@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+    .card-header {
+      text-align: center;
+    }
+    .card-header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    .card-content {
+      margin-top: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #218838;
+    }
+    .language-toggle {
+      cursor: pointer;
+      font-size: 14px;
+      text-align: right;
+    }
+    /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Chat Container */
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.search-input {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+}
+
+/* Chat Body */
+.chat-body {
+    padding: 10px;
+}
+
+/* Chat List */
+.chat-list {
+    max-height: 200px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-item:hover {
+    background-color: #f0f0f0;
+}
+
+.chat-item.active {
+    background-color: #e7f1ff;
+}
+
+.chat-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+/* Chat View */
+.chat-view {
+    padding: 10px;
+}
+
+.chat-messages {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.message.other {
+    align-items: flex-start;
+}
+
+.message.user {
+    align-items: flex-end;
+}
+
+.message-text {
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 70%;
+}
+
+.message.other .message-text {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.message.user .message-text {
+    background-color: #007bff;
+    color: white;
+}
+
+.message-time {
+    font-size: 0.8em;
+    color: #888;
+}
+
+/* Chat Input */
+.chat-input {
+    display: flex;
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.send-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.send-button:hover {
+    background-color: #0056b3;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <h1 id="title">Sign Up</h1>
+      <div class="language-toggle" onclick="handleLanguageChange()">
+        <span id="globe">🌐</span>
+      </div>
+    </div>
+    <div class="card-content">
+      <form onsubmit="handleSignUp(event)">
+        <div class="form-group">
+          <label for="username" id="usernameLabel">Username</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password" id="passwordLabel">Password</label>
+          <input type="password" id="password" required>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword" id="confirmPasswordLabel">Confirm Password</label>
+          <input type="password" id="confirmPassword" required>
+        </div>
+        <div class="form-group">
+          <label for="role" id="roleLabel">Select Role</label>
+          <select id="role" required>
+            <option value="" disabled selected id="rolePlaceholder">Select Role</option>
+            <option value="prisoner" id="prisoner">Prisoner</option>
+            <option value="judge" id="judge">Judicial Authority</option>
+            <option value="legalAid" id="legalAid">Legal Aid Provider</option>
+          </select>
+        </div>
+        <button type="submit" class="btn" id="signUpBtn">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let language = 'en'; // Default language is English
+
+    const translations = {
+      en: {
+        title: 'Sign Up',
+        username: 'Username',
+        password: 'Password',
+        confirmPassword: 'Confirm Password',
+        role: 'Select Role',
+        signUp: 'Sign Up',
+        prisoner: 'Prisoner',
+        judge: 'Judicial Authority',
+        legalAid: 'Legal Aid Provider'
+      },
+      hi: {
+        title: 'साइन अप करें',
+        username: 'उपयोगकर्ता नाम',
+        password: 'पासवर्ड',
+        confirmPassword: 'पासवर्ड की पुष्टि करें',
+        role: 'भूमिका चुनें',
+        signUp: 'साइन अप करें',
+        prisoner: 'कैदी',
+        judge: 'न्यायिक अधिकारी',
+        legalAid: 'कानूनी सहायता प्रदाता'
+      }
+    };
+
+    function handleLanguageChange() {
+      language = language === 'en' ? 'hi' : 'en';
+      updateTranslations();
+    }
+
+    function updateTranslations() {
+      const t = translations[language];
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('usernameLabel').textContent = t.username;
+      document.getElementById('passwordLabel').textContent = t.password;
+      document.getElementById('confirmPasswordLabel').textContent = t.confirmPassword;
+      document.getElementById('roleLabel').textContent = t.role;
+      document.getElementById('rolePlaceholder').textContent = t.role;
+      document.getElementById('prisoner').textContent = t.prisoner;
+      document.getElementById('judge').textContent = t.judge;
+      document.getElementById('legalAid').textContent = t.legalAid;
+      document.getElementById('signUpBtn').textContent = t.signUp;
+    }
+
+    function handleSignUp(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const role = document.getElementById('role').value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      console.log('Sign up attempt:', { username, password, role });
+
+      // Here you would typically send this data to your server for processing
+      // For now, we'll just log it and show an alert
+      alert(`Thank you for signing up as a ${role}!`);
+
+      // Redirect based on role (you may want to change this behavior for a real app)
+      if (role === 'prisoner') {
+        window.location.href = 'undertrail.html';
+      } else if (role === 'judge') {
+        window.location.href = 'judicial.html';
+      } else if (role === 'legalAid') {
+        window.location.href = 'legaaid.html';
+      }
+    }
+
+    // Initialize the translations when the page loads
+    updateTranslations();
+  </script>
+
+</body>
+</html>

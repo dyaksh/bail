@@ -1,0 +1,297 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Global Styles */
+* {
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-family: "Poppins", sans-serif; /* Set font family to Poppins */
+}
+
+body {
+  background: #E3F2FD; /* Set background color for the body */
+}
+
+/* Chatbot Toggler Button */
+.chatbot-toggler {
+  position: fixed; /* Fixed positioning to keep it in the same place */
+  bottom: 30px; /* Distance from the bottom of the viewport */
+  right: 35px; /* Distance from the right of the viewport */
+  outline: none; /* Remove outline on focus */
+  border: none; /* Remove default border */
+  height: 50px; /* Height of the toggler button */
+  width: 50px; /* Width of the toggler button */
+  display: flex; /* Use flexbox for centering contents */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  border-radius: 50%; /* Make the button circular */
+  background: #60a5fa; /* Background color for the button */
+  transition: all 0.2s ease; /* Smooth transition for hover effects */
+}
+
+body.show-chatbot .chatbot-toggler {
+  transform: rotate(90deg); /* Rotate the button when the chatbot is shown */
+}
+
+/* Toggler Button Text */
+.chatbot-toggler span {
+  color: #fff; /* Text color */
+  position: absolute; /* Position text absolutely within the button */
+}
+
+/* Hide/show text based on chatbot visibility */
+.chatbot-toggler span:last-child,
+body.show-chatbot .chatbot-toggler span:first-child {
+  opacity: 0; /* Make first text span invisible when the chatbot is shown */
+}
+
+body.show-chatbot .chatbot-toggler span:last-child {
+  opacity: 1; /* Make the last text span visible when the chatbot is shown */
+}
+
+/* Chatbot Container */
+.chatbot {
+  position: fixed; /* Fixed positioning for the chatbot */
+  right: 35px; /* Distance from the right */
+  bottom: 90px; /* Distance from the bottom */
+  width: 420px; /* Width of the chatbot */
+  background: #fff; /* Background color */
+  border-radius: 15px; /* Rounded corners */
+  overflow: hidden; /* Hide overflow content */
+  opacity: 0; /* Initial opacity (hidden) */
+  pointer-events: none; /* Prevent interactions when hidden */
+  transform: scale(0.5); /* Scale down when hidden */
+  transform-origin: bottom right; /* Scaling reference point */
+  box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1), /* Shadow for depth */
+              0 32px 64px -48px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  transition: all 0.1s ease; /* Smooth transition for visibility changes */
+}
+
+body.show-chatbot .chatbot {
+  opacity: 1; /* Show chatbot */
+  pointer-events: auto; /* Allow interactions */
+  transform: scale(1); /* Scale to normal size */
+}
+
+/* Chatbot Header */
+.chatbot header {
+  padding: 16px 0; /* Padding for the header */
+  position: relative; /* Relative positioning for child elements */
+  text-align: center; /* Center the header text */
+  color: #fff; /* Text color */
+  background: #60a5fa; /* Background color for the header */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+.chatbot header span {
+  position: absolute; /* Position close button absolutely */
+  right: 15px; /* Position from the right */
+  top: 50%; /* Center vertically */
+  display: none; /* Initially hidden */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transform: translateY(-50%); /* Center vertically */
+}
+
+header h2 {
+  font-size: 1.4rem; /* Font size for header title */
+}
+
+/* Chatbox Styles */
+.chatbot .chatbox {
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: 510px; /* Fixed height for chatbox */
+  padding: 30px 20px 100px; /* Padding around the chatbox */
+}
+
+/* Custom scrollbar styles */
+.chatbot :where(.chatbox, textarea)::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+}
+
+.chatbot :where(.chatbox, textarea)::-webkit-scrollbar-track {
+  background: #fff; /* Background of the scrollbar track */
+  border-radius: 25px; /* Rounded corners for track */
+}
+
+.chatbot :where(.chatbox, textarea)::-webkit-scrollbar-thumb {
+  background: #ccc; /* Color for the scrollbar thumb */
+  border-radius: 25px; /* Rounded corners for thumb */
+}
+
+/* Chat Message Styles */
+.chatbox .chat {
+  display: flex; /* Use flexbox for layout */
+  list-style: none; /* Remove default list styling */
+}
+
+.chatbox .outgoing {
+  margin: 20px 0; /* Margin for outgoing messages */
+  justify-content: flex-end; /* Align outgoing messages to the right */
+}
+
+.chatbox .incoming span {
+  width: 32px; /* Width for incoming message avatar */
+  height: 32px; /* Height for incoming message avatar */
+  color: #fff; /* Text color for avatar */
+  cursor: default; /* Default cursor */
+  text-align: center; /* Center text in avatar */
+  line-height: 32px; /* Center line height */
+  align-self: flex-end; /* Align avatar to bottom of chat */
+  background: #60a5fa; /* Background color for avatar */
+  border-radius: 4px; /* Rounded corners for avatar */
+  margin: 0 10px 7px 0; /* Margin around avatar */
+}
+
+.chatbox .chat p {
+  white-space: pre-wrap; /* Preserve whitespace */
+  padding: 12px 16px; /* Padding for chat messages */
+  border-radius: 10px 10px 0 10px; /* Rounded corners for messages */
+  max-width: 75%; /* Limit width of chat messages */
+  color: #fff; /* Text color for messages */
+  font-size: 0.95rem; /* Font size for messages */
+  background: #60a5fa; /* Background color for messages */
+}
+
+.chatbox .incoming p {
+  border-radius: 10px 10px 10px 0; /* Rounded corners for incoming messages */
+}
+
+/* Error Message Styles */
+.chatbox .chat p.error {
+  color: #721c24; /* Text color for error messages */
+  background: #f8d7da; /* Background color for error messages */
+}
+
+.chatbox .incoming p {
+  color: #000; /* Text color for incoming messages */
+  background: #f2f2f2; /* Background color for incoming messages */
+}
+
+/* Chat Input Styles */
+.chatbot .chat-input {
+  display: flex; /* Use flexbox for layout */
+  gap: 5px; /* Gap between input and send button */
+  position: absolute; /* Position input at the bottom */
+  bottom: 0; /* Align to bottom */
+  width: 100%; /* Full width */
+  background: #fff; /* Background color for input area */
+  padding: 3px 20px; /* Padding around input area */
+  border-top: 1px solid #ddd; /* Top border for input area */
+}
+
+.chat-input textarea {
+  height: 55px; /* Height of the textarea */
+  width: 100%; /* Full width */
+  border: none; /* Remove border */
+  outline: none; /* Remove outline on focus */
+  resize: none; /* Disable resizing */
+  max-height: 180px; /* Maximum height for textarea */
+  padding: 15px 15px 15px 0; /* Padding for textarea */
+  font-size: 0.95rem; /* Font size for textarea */
+}
+
+/* Send Button Styles */
+.chat-input span {
+  align-self: flex-end; /* Align send button to bottom */
+  color: #60a5fa; /* Color for send button */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  height: 55px; /* Height of the send button */
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Center items vertically */
+  visibility: hidden; /* Initially hidden */
+  font-size: 1.35rem; /* Font size for send button */
+}
+
+/* Show send button when textarea has content */
+.chat-input textarea:valid~span {
+  visibility: visible; /* Make send button visible when textarea has valid input */
+}
+
+/* Responsive Styles */
+@media (max-width: 490px) {
+  .chatbot-toggler {
+    right: 20px; /* Adjust position for smaller screens */
+    bottom: 20px; /* Adjust position for smaller screens */
+  }
+
+  .chatbot {
+    right: 0; /* Adjust width for smaller screens */
+    bottom: 0; /* Adjust position for smaller screens */
+    height: 100%; /* Full height for chatbot */
+    width: 100%; /* Full width for chatbot */
+    border-radius: 0; /* Remove rounded corners for chatbot */
+  }
+
+  .chatbot header {
+    border-radius: 0; /* Remove rounded corners for header */
+  }
+
+  .chatbot .chatbox {
+    padding: 15px; /* Less padding for smaller screens */
+  }
+
+  .chatbot .chat-input {
+    padding: 10px; /* Less padding for input area */
+  }
+}
+/* styles.css */
+
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif; /* Set a default font */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  background: #f5f5f5; /* Background color */
+}
+
+/* Section Styles */
+.lawyers-section {
+  max-width: 800px; /* Max width for the section */
+  margin: 20px auto; /* Center the section */
+  padding: 20px; /* Padding around the section */
+  background: #fff; /* Background color for section */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Card Styles */
+.lawyer-card {
+  display: flex; /* Use flexbox for card layout */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center items */
+  background: #fff; /* Card background color */
+  border: 1px solid #ddd; /* Border for the card */
+  border-radius: 8px; /* Rounded corners */
+  margin: 10px 0; /* Margin between cards */
+  padding: 15px; /* Padding inside the card */
+  transition: box-shadow 0.3s; /* Transition for hover effect */
+}
+
+.lawyer-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+}
+
+/* Image Styles */
+.lawyer-card img {
+  width: 100px; /* Fixed width for images */
+  height: 100px; /* Fixed height for images */
+  border-radius: 50%; /* Circular images */
+  margin-bottom: 10px; /* Space below the image */
+}
+
+/* Button Styles */
+.contact-btn {
+  background: #60a5fa; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners for button */
+  padding: 10px 15px; /* Padding inside the button */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background 0.3s; /* Transition for hover effect */
+}
+
+.contact-btn:hover {
+  background: #60a5fa; /* Darker shade on hover */
+}
