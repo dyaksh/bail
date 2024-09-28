@@ -334,7 +334,7 @@ function switchTab(tab) {
           <div class="chat-view">
             <div class="chat-header">
               <div class="chat-name">Rohan Kumar</div>
-              <div class="chat-email">rohan_kumar@gmail.com</div>
+             
             </div>
             <div class="chat-messages">
               <div class="message other">
@@ -345,7 +345,66 @@ function switchTab(tab) {
                 <div class="message-text">Got it. Is it likely that the bail will be granted in the first hearing?</div>
                 <div class="message-time">8:37 PM</div>
               </div>
-              <!-- Additional messages -->
+              <div class="message other">
+                <div class="message-text">It's hard to say, but we have a strong case. What do you know about the new bail reform laws?</div>
+                <div class="message-time">8:38 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">Not much, can you explain it to me?</div>
+                <div class="message-time">8:39 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">The new laws aim to reduce pretrial detention and promote fairness in the bail system. But it's still unclear how it will be implemented.</div>
+                <div class="message-time">8:40 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">That sounds promising. What are the chances of the prosecution offering a plea deal?</div>
+                <div class="message-time">8:41 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">It's possible, but we need to review the evidence and case files before making any decisions.</div>
+                <div class="message-time">8:42 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">Have you handled similar cases in the past?</div>
+                <div class="message-time">8:43 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">Yes, I've worked on several cases involving similar charges. We've had success in the past, but each case is unique.</div>
+                <div class="message-time">8:44 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">What are the potential consequences if we lose the case?</div>
+                <div class="message-time">8:45 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">If we lose, the defendant could face up to 5 years in prison and a fine of up to $10,000.</div>
+                <div class="message-time">8:46 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">That's a lot to consider. What's the next step in the process?</div>
+                <div class="message-time">8:47 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">We need to review the discovery and start preparing our defense strategy. I'll send over some documents for you to review.</div>
+                <div class="message-time">8:48 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">Sounds good. What's the deadline for submitting our defense?</div>
+                <div class="message-time">8:49 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">We have 2 weeks to submit our defense. I'll make sure to keep you updated on the progress.</div>
+                <div class="message-time">8:50 PM</div>
+              </div>
+              <div class="message user">
+                <div class="message-text">Okay, got it. Thanks for explaining everything to me.</div>
+                <div class="message-time">8:51 PM</div>
+              </div>
+              <div class="message other">
+                <div class="message-text">You're welcome. I'll be in touch soon to discuss the case further.</div>
+                <div class="message-time">8:52 PM</div>
+              </div>
             </div>
             <div class="chat-input">
               <input type="text" placeholder="Type something here..." class="chat-input-field" />
