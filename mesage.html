@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .messages-body {
+            max-width: 100%;
+            max-height: 100%;/* Increased max width */
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .messages-view {
+            display: flex;
+            flex-direction: column;
+            height:100% /* Set a fixed height */
+        }
+
+        .messages-header {
+            background-color: rgb(87, 185, 255);
+            color: #fff;
+            padding: 15px; /* Increased padding */
+        }
+
+        .messages-name {
+            font-size: 22px; /* Increased font size */
+            font-family: Arial, sans-serif;
+        }
+
+        .messages-list {
+            padding: 15px; /* Increased padding */
+            flex: 1; /* Allow to take remaining space */
+            max-height: 600px; /* Increased max height */
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+
+        .message.other {
+            align-items: flex-start;
+        }
+
+        .message.user {
+            align-items: flex-end;
+        }
+
+        .message-text {
+            padding: 12px; /* Increased padding */
+            border-radius: 5px;
+            max-width: 100%; /* Adjusted for more space */
+            word-wrap: break-word;
+        }
+
+        .message.other .message-text {
+            background-color: #e0e0e0;
+            color: #000;
+        }
+
+        .message.user .message-text {
+            background-color: #3493f2;
+            color: #fff;
+        }
+
+        .message-time {
+            font-size: 14px; /* Increased font size */
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .messages-input {
+            display: flex;
+            padding: 15px; /* Increased padding */
+            border-top: 1px solid #ddd;
+            margin-bottom: 0%;
+        }
+
+        .messages-input-field {
+            flex: 1;
+            padding: 12px; /* Increased padding */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px; /* Increased font size */
+        }
+
+        .send-button {
+            padding: 12px 20px; /* Increased padding */
+            background-color: #2686d0;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px; /* Increased font size */
+        }
+    </style>
+    <title>Chat Interface</title>
+</head>
+
+<body>
+        <div class="messages-view">
+            <div class="messages-header">
+                <div class="messages-name">John Doe</div>
+            </div>
+            <div class="messages-list">
+                <div class="message other">
+                    <div class="message-text">Just bring any additional documents I mentioned in my email...</div>
+                    <div class="message-time">8:36 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">Got it. Is it likely that the bail will be granted in the first hearing?</div>
+                    <div class="message-time">8:37 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">It's hard to say, but we have a strong case. What do you know about the new bail reform laws?</div>
+                    <div class="message-time">8:38 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">Not much, can you explain it to me?</div>
+                    <div class="message-time">8:39 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">The new laws aim to reduce pretrial detention and promote fairness in the bail system. But it's still unclear how it will be implemented.</div>
+                    <div class="message-time">8:40 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">That sounds promising. What are the chances of the prosecution offering a plea deal?</div>
+                    <div class="message-time">8:41 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">It's possible, but we need to review the evidence and case files before making any decisions.</div>
+                    <div class="message-time">8:42 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">Have you handled similar cases in the past?</div>
+                    <div class="message-time">8:43 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">Yes, I've worked on several cases involving similar charges. We've had success in the past, but each case is unique.</div>
+                    <div class="message-time">8:44 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">What are the potential consequences if we lose the case?</div>
+                    <div class="message-time">8:45 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">If we lose, the defendant could face up to 5 years in prison and a fine of up to $10,000.</div>
+                    <div class="message-time">8:46 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">That's a lot to consider. What's the next step in the process?</div>
+                    <div class="message-time">8:47 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">We need to review the discovery and start preparing our defense strategy. I'll send over some documents for you to review.</div>
+                    <div class="message-time">8:48 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">Sounds good. What's the deadline for submitting our defense?</div>
+                    <div class="message-time">8:49 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">We have 2 weeks to submit our defense. I'll make sure to keep you updated on the progress.</div>
+                    <div class="message-time">8:50 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">Okay, got it. Thanks for explaining everything to me.</div>
+                    <div class="message-time">8:51 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">You're welcome. I'll be in touch soon to discuss the case further.</div>
+                    <div class="message-time">8:52 PM</div>
+                </div>
+                <div class="message user">
+                    <div class="message-text">I appreciate your support. It helps to have clarity on these matters.</div>
+                    <div class="message-time">8:53 PM</div>
+                </div>
+                <div class="message other">
+                    <div class="message-text">Absolutely! Communication is key in these situations.</div>
+                    <div class="message-time">8:54 PM</div>
+                </div>
+            </div>
+            <div class="messages-input">
+                <input type="text" placeholder="Type something here..." class="messages-input-field" />
+                <button class="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
