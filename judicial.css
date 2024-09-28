@@ -1,0 +1,124 @@
+/* Card Styles */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 15px; /* Adds spacing between cards */
+  }
+  
+  .card {
+    background-color: #ffffff; /* White background */
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the card */
+    margin: 10px;
+    width: calc(33.33% - 20px); /* Responsive width */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effects */
+  }
+  
+  .card:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  }
+  
+  .card h4 {
+    margin-top: 0; /* Remove default margin */
+    font-size: 1.25rem; /* Increase font size for headings */
+    color: #3498db; /* Primary color for headings */
+  }
+  
+  /* Tab Styles */
+  .tabs {
+    margin-bottom: 20px; /* Space below the tabs */
+  }
+  
+  .tab {
+    display: flex;
+    align-items: center; /* Center content vertically */
+    cursor: pointer;
+    padding: 10px 15px; /* Padding for tabs */
+    margin-right: 10px; /* Space between tabs */
+    border: 1px solid #3498db; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #e8f4fa; /* Light background */
+    color: #3498db; /* Tab text color */
+    transition: background-color 0.2s; /* Smooth background transition */
+  }
+  
+  .tab.active {
+    background-color: #3498db; /* Active tab background */
+    color: white; /* Active tab text color */
+  }
+  
+  .tab:hover {
+    background-color: #5a9edc; /* Hover effect for tabs */
+  }
+  
+  /* Chatbot Styles */
+  .chatbot {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    transition: all 0.3s ease; /* Smooth opening/closing */
+  }
+  
+  .chatbot header {
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .chat-input textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    resize: none;
+    transition: border-color 0.2s; /* Smooth border transition */
+  }
+  
+  .chat-input textarea:focus {
+    border-color: #3498db; /* Border color on focus */
+  }
+  
+  .chat-input span {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #3498db; /* Send button color */
+  }
+  
+  /* Adjusting Navbar and Sidebar for Consistency */
+  .navbar {
+    padding: 15px; /* Slightly more padding for a better look */
+  }
+  
+  .sidebar a {
+    display: flex; /* Flex for icon alignment */
+    align-items: center; /* Center icons and text */
+    padding: 12px 20px; /* Padding for sidebar items */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.2s; /* Smooth background transition */
+  }
+  
+  .sidebar a:hover {
+    background-color: #5a9edc; /* Hover effect for sidebar */
+  }
+  

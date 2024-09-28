@@ -3,201 +3,893 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Judicial Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Judicial Authority Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    /* Navbar styles */
+    .navbar {
       display: flex;
-      margin: 0;
-      height: 100vh;
-      background-color: #f0f0f0;
-    }
-    nav {
-      width: 250px;
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    nav h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    nav button {
-      display: block;
-      width: 100%;
+      justify-content: space-between;
+      align-items: center;
       padding: 10px;
-      margin-bottom: 10px;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      font-size: 16px;
+      background-color: #f8f8f8;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
     }
-    nav button.active {
-      background-color: #e0e0e0;
-      font-weight: bold;
+
+    .navbar h1 {
+      margin: 0;
     }
-    main {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-      background-color: #fff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-    .search-bar {
+
+    .icon-container {
       display: flex;
-      margin-bottom: 20px;
+      align-items: center;
     }
-    .search-bar input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .search-bar button {
-      margin-left: 10px;
-      padding: 8px 12px;
-      border: none;
-      background-color: #007bff;
-      color: white;
-      border-radius: 4px;
+
+    .icon {
+      margin-left: 20px;
       cursor: pointer;
     }
-    .prisoner-card {
-      border: 1px solid #ccc;
-      padding: 15px;
+
+    /* Sidebar styles */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      width: 225px;
+      height: 100%;
+      background-color: #60a5fa;
+      color: #fff;
+      padding-top: 60px;
+      z-index: 999;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
       margin-bottom: 10px;
     }
-    .progress-bar {
-      width: 100%;
-      height: 20px;
-      background-color: #e0e0e0;
+
+    .sidebar a:hover {
+      background-color: #5a9edc;
     }
-    .progress-fill {
-      height: 100%;
-      background-color: #007bff;
+
+    /* Main content styles */
+    .main-content {
+      margin-left: 240px; /* Offset for sidebar */
+      padding-top: 80px; /* Offset for navbar */
+      padding: 20px;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-direction: column; /* One card per row for calendars */
+      margin-top: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 10px 0; /* Space between cards */
+      width: 100%; /* Full width for cards */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h4 {
+      margin-top: 0;
+    }
+
+    .card.decision.completed {
+      background-color: #d4edda; /* Light green for completed */
+      border-color: #c3e6cb; /* Darker green border */
+    }
+
+    .card.decision.not-completed {
+      background-color: #f8d7da; /* Light red for not completed */
+      border-color: #f5c6cb; /* Darker red border */
+    }
+
+    .notification {
+      background-color: #e7f3fe;
+      border-left: 5px solid #2196F3;
+      margin: 5px 0;
+      padding: 10px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Side Navbar -->
-  <nav>
-    <h1>Judicial Dashboard</h1>
-    <button onclick="showTab('home')" class="active" id="tab-home">Home</button>
-    <button onclick="showTab('notifications')" id="tab-notifications">Notifications</button>
-    <button onclick="showTab('caseload')" id="tab-caseload">Caseload</button>
-    <button onclick="showTab('caseDetails')" id="tab-caseDetails">Case Details</button>
-    <button onclick="showTab('decisions')" id="tab-decisions">Decisions</button>
-
-    <div class="search-bar">
-      <input type="text" id="prisonerSearch" placeholder="Search prisoners...">
-      <button onclick="searchPrisoners()">Search</button>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#" onclick="switchTab('home')"><i class="fas fa-home icon"></i> Home</a>
+      <a href="#" onclick="switchTab('calendars')"><i class="fas fa-calendar-alt icon"></i> Calendars</a>
+      <a href="#" onclick="switchTab('cases')"><i class="fas fa-file-alt icon"></i> Cases</a>
+      <a href="#" onclick="switchTab('decisions')"><i class="fas fa-gavel icon"></i> Decisions</a>
+      <a href="index.html" onclick="logout()"><i class="fas fa-sign-out-alt icon"></i> Sign Out</a>
     </div>
-  </nav>
 
-  <!-- Main Content Area -->
-  <main>
-    <div id="content-home" class="tab-content">
-      <h2>Welcome, Your Honor</h2>
-      <p>Here you can review case details, make decisions on undertrail prisoners, and manage your caseload.</p>
-      <h3>Upcoming Hearings</h3>
-      <div id="upcoming-hearings">
-        <!-- Upcoming hearings will be dynamically added here -->
+    <!-- Top Navbar -->
+    <div class="navbar">
+      <h1>Judicial Authority</h1>
+      <div class="icon-container">
+        <i class="fas fa-search icon search-icon"></i>
+        <i class="fas fa-bell icon" onclick="switchTab('notifications')"></i>
       </div>
     </div>
 
-    <div id="content-notifications" class="tab-content" style="display:none;">
-      <h2>Notifications</h2>
-      <ul>
-        <li>New case assigned: UT-3456</li>
-        <li>Hearing rescheduled for UT-1234</li>
-        <li>Bail application received for UT-5678</li>
-      </ul>
-    </div>
+    <!-- Main content area -->
+    <div class="main-content" id="content">
+      <h1>Welcome to the Judicial Authority Dashboard</h1>
 
-    <div id="content-caseload" class="tab-content" style="display:none;">
-      <h2>Current Caseload</h2>
-      <p><strong>Total Active Cases:</strong> 25</p>
-      <p><strong>Hearings This Week:</strong> 8</p>
-      <p><strong>Pending Judgments:</strong> 3</p>
-      <p><strong>Recent Dispositions:</strong> 5</p>
-    </div>
+      <!-- Notifications Section -->
+      <div class="cards-container" id="notifications-content">
+        <h3>Notifications</h3>
+        <div class="notification"><i class="fas fa-info-circle"></i> New case management system launching on November 1, 2024.</div>
+        <div class="notification"><i class="fas fa-user-plus"></i> Mandatory staff training on October 25, 2024.</div>
+        <div class="notification"><i class="fas fa-calendar-check"></i> Upcoming hearing on Case #006 scheduled for October 30, 2024.</div>
+        <div class="notification"><i class="fas fa-gavel"></i> Decision on Case #005 has been published.</div>
+        <div class="notification"><i class="fas fa-exclamation-triangle"></i> Court closure on November 15, 2024, for maintenance.</div>
+        <div class="notification"><i class="fas fa-file-alt"></i> New evidence submitted for Case #004.</div>
+        <div class="notification"><i class="fas fa-bell"></i> Reminder: Submit reports by the end of the month.</div>
+        <div class="notification"><i class="fas fa-envelope"></i> Email verification needed for new staff accounts.</div>
+        <div class="notification"><i class="fas fa-file-invoice"></i> Annual budget meeting scheduled for December 1, 2024.</div>
+        <div class="notification"><i class="fas fa-flag"></i> Compliance audit scheduled for January 2025.</div>
+      </div>
 
-    <div id="content-caseDetails" class="tab-content" style="display:none;">
-      <h2>Case Details: UT-1234</h2>
-      <div>
-        <p><strong>Prisoner Name:</strong> John Doe</p>
-        <p><strong>Age:</strong> 35</p>
-        <p><strong>Charge:</strong> Unauthorized Access</p>
-        <p><strong>Next Hearing:</strong> 2024-10-01</p>
+      <!-- Home Section -->
+      <div class="cards-container" id="home-content" style="display: none;">
+        <h3>Latest Updates</h3>
+        <div class="card">
+          <h4><i class="fas fa-info-circle"></i> New Case Management System Launch</h4>
+          <p>A new case management system will be launched on November 1, 2024.</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-user-plus"></i> Staff Training Session</h4>
+          <p>Mandatory training for all staff will be held on October 25, 2024.</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-exclamation-triangle"></i> Important Policy Change</h4>
+          <p>Changes to case filing procedures effective from November 1, 2024.</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-briefcase"></i> Job Openings</h4>
+          <p>Several new positions are open in the administration department.</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-alt"></i> Upcoming Legal Seminar</h4>
+          <p>A legal seminar is scheduled for November 10, 2024, all are encouraged to attend.</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-chart-line"></i> Performance Review</h4>
+          <p>Quarterly performance reviews will begin on November 15, 2024.</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-check-circle"></i> Compliance Updates</h4>
+          <p>New compliance training modules available online.</p>
+        </div>
       </div>
-      <h3>Case Progress</h3>
-      <div class="progress-bar">
-        <div class="progress-fill" style="width: 65%;"></div>
-      </div>
-      <p>65% Complete</p>
-    </div>
 
-    <div id="content-decisions" class="tab-content" style="display:none;">
-      <h2>Pending Decisions</h2>
-      <div id="pending-decisions">
-        <!-- Pending decisions will be dynamically added here -->
+      <!-- Calendars Section -->
+      <div class="cards-container" id="calendars-content" style="display: none;">
+        <h3>Upcoming Hearings</h3>
+        <div class="card">
+          <h4><i class="fas fa-calendar-check"></i> Hearing on Case ABC</h4>
+          <p>Date: 10th October 2024</p>
+          <p>Location: Courtroom A</p>
+          <p>Time: 10:00 AM</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-day"></i> Hearing on Case XYZ</h4>
+          <p>Date: 15th October 2024</p>
+          <p>Location: Courtroom B</p>
+          <p>Time: 11:00 AM</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-check"></i> Hearing on Case #007</h4>
+          <p>Date: 20th October 2024</p>
+          <p>Location: Courtroom C</p>
+          <p>Time: 9:30 AM</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-day"></i> Hearing on Case #008</h4>
+          <p>Date: 22nd October 2024</p>
+          <p>Location: Courtroom D</p>
+          <p>Time: 1:00 PM</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-check"></i> Hearing on Case #009</h4>
+          <p>Date: 25th October 2024</p>
+          <p>Location: Courtroom E</p>
+          <p>Time: 2:00 PM</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-day"></i> Hearing on Case #010</h4>
+          <p>Date: 28th October 2024</p>
+          <p>Location: Courtroom F</p>
+          <p>Time: 3:00 PM</p>
+        </div>
+        <div class="card">
+          <h4><i class="fas fa-calendar-check"></i> Hearing on Case #011</h4>
+          <p>Date: 30th October 2024</p>
+          <p>Location: Courtroom G</p>
+          <p>Time: 11:00 AM</p>
+        </div>
+      </div>
+<!-- Cases Section -->
+<!-- Cases Section -->
+<div class="cards-container" id="cases-content" style="display: none;">
+  <h3>Case Details</h3>
+
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #001</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 1st September 2024</p>
+    <button class="review-button" onclick="openReview('case1-review')">Review</button>
+    <div id="case1-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case1-review')">&times;</span>
+        <h5>Case Details for John Doe</h5>
+        <p><strong>Case Number:</strong> 123456</p>
+        <p><strong>Date of Arrest:</strong> January 10, 2023</p>
+        <p><strong>Charges:</strong> Theft</p>
+        <p><strong>Court:</strong> Springfield District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+
+        <h3>Documents</h3>
+        <ul>
+          <li>Criminal Record</li>
+          <li>Court Transcript</li>
+          <li>Bail Application</li>
+        </ul>
+
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>January 1, 1990</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Male</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>123 Main St, Springfield, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>Bachelor's Degree in Computer Science</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Software Developer</td></tr>
+          <tr><td><strong>Family:</strong></td><td>2 Dependents</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>None</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Good</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Stable</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>February 15, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Computer Literacy</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Regular Visits</td></tr>
+        </table>
+
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case1-recommendation')">Get Recommendation</button><br>
+        <div id="case1-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case1-probability">75%</span></p>
+          <p>Likelihood of Running Away: <span id="case1-risk">Low</span></p>
+          <p>Additional Notes: Consider the suspect's ties to the community.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case1')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case1')">Reject Bail</button>
+        </div>
       </div>
     </div>
-  </main>
+  </div>
+
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #002</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 5th September 2024</p>
+    <button class="review-button" onclick="openReview('case2-review')">Review</button>
+    <div id="case2-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case2-review')">&times;</span>
+        <h5>Case Details for Jane Smith</h5>
+        <p><strong>Case Number:</strong> 789012</p>
+        <p><strong>Date of Arrest:</strong> March 15, 2023</p>
+        <p><strong>Charges:</strong> Assault</p>
+        <p><strong>Court:</strong> Maplewood District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+
+        <h3>Documents</h3>
+        <ul>
+          <li>Incident Report</li>
+          <li>Witness Statements</li>
+          <li>Bail Application</li>
+        </ul>
+
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>February 14, 1992</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Female</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>456 Oak St, Maplewood, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>Master's Degree in Psychology</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Counselor</td></tr>
+          <tr><td><strong>Family:</strong></td><td>1 Dependent</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>None</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Good</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Stable</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>March 30, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Self-Defense Classes</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Regular Visits</td></tr>
+        </table>
+
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case2-recommendation')">Get Recommendation</button><br>
+        <div id="case2-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case2-probability">65%</span></p>
+          <p>Likelihood of Running Away: <span id="case2-risk">Medium</span></p>
+          <p>Additional Notes: Evaluate the suspect's mental state.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case2')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case2')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #003</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 10th September 2024</p>
+    <button class="review-button" onclick="openReview('case3-review')">Review</button>
+    <div id="case3-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case3-review')">&times;</span>
+        <h5>Case Details for Mike Johnson</h5>
+        <p><strong>Case Number:</strong> 345678</p>
+        <p><strong>Date of Arrest:</strong> April 5, 2023</p>
+        <p><strong>Charges:</strong> Drug Possession</p>
+        <p><strong>Court:</strong> Downtown District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+
+        <h3>Documents</h3>
+        <ul>
+          <li>Police Report</li>
+          <li>Lab Results</li>
+          <li>Bail Application</li>
+        </ul>
+
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>March 30, 1988</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Male</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>789 Pine St, Downtown, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>High School Diploma</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Unemployed</td></tr>
+          <tr><td><strong>Family:</strong></td><td>No Dependents</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>1 Misdemeanor</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Fair</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Needs Assessment</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>April 20, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Drug Counseling</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Infrequent Visits</td></tr>
+        </table>
+
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case3-recommendation')">Get Recommendation</button><br>
+        <div id="case3-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case3-probability">50%</span></p>
+          <p>Likelihood of Running Away: <span id="case3-risk">High</span></p>
+          <p>Additional Notes: Assess need for rehabilitation.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case3')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case3')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #004</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 15th September 2024</p>
+    <button class="review-button" onclick="openReview('case4-review')">Review</button>
+    <div id="case4-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case4-review')">&times;</span>
+        <h5>Case Details for Sarah Lee</h5>
+        <p><strong>Case Number:</strong> 456789</p>
+        <p><strong>Date of Arrest:</strong> May 10, 2023</p>
+        <p><strong>Charges:</strong> Fraud</p>
+        <p><strong>Court:</strong> River City Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+
+        <h3>Documents</h3>
+        <ul>
+          <li>Fraud Report</li>
+          <li>Bank Statements</li>
+          <li>Bail Application</li>
+        </ul>
+
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>December 5, 1985</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Female</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>321 Elm St, River City, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>Bachelor's Degree in Business</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Accountant</td></tr>
+          <tr><td><strong>Family:</strong></td><td>2 Dependents</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>None</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Good</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Stable</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>May 25, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Financial Literacy</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Strong Support</td></tr>
+        </table>
+
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case4-recommendation')">Get Recommendation</button><br>
+        <div id="case4-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case4-probability">80%</span></p>
+          <p>Likelihood of Running Away: <span id="case4-risk">Low</span></p>
+          <p>Additional Notes: Consider stable employment history.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case4')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case4')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #005</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 20th September 2024</p>
+    <button class="review-button" onclick="openReview('case5-review')">Review</button>
+    <div id="case5-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case5-review')">&times;</span>
+        <h5>Case Details for Alice Brown</h5>
+        <p><strong>Case Number:</strong> 567890</p>
+        <p><strong>Date of Arrest:</strong> June 1, 2023</p>
+        <p><strong>Charges:</strong> Embezzlement</p>
+        <p><strong>Court:</strong> Westside District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+  
+        <h3>Documents</h3>
+        <ul>
+          <li>Financial Records</li>
+          <li>Testimony from Colleagues</li>
+          <li>Bail Application</li>
+        </ul>
+  
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>March 15, 1980</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Female</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>222 Cedar St, Westside, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>Master's Degree in Finance</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Financial Analyst</td></tr>
+          <tr><td><strong>Family:</strong></td><td>1 Dependent</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>None</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Good</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Stable</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>June 20, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Fraud Prevention</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Strong Support</td></tr>
+        </table>
+  
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case5-recommendation')">Get Recommendation</button><br>
+        <div id="case5-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case5-probability">85%</span></p>
+          <p>Likelihood of Running Away: <span id="case5-risk">Low</span></p>
+          <p>Additional Notes: Evaluate family support system.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case5')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case5')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #006</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 25th September 2024</p>
+    <button class="review-button" onclick="openReview('case6-review')">Review</button>
+    <div id="case6-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case6-review')">&times;</span>
+        <h5>Case Details for Robert Green</h5>
+        <p><strong>Case Number:</strong> 678901</p>
+        <p><strong>Date of Arrest:</strong> July 10, 2023</p>
+        <p><strong>Charges:</strong> Burglary</p>
+        <p><strong>Court:</strong> Northside District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+  
+        <h3>Documents</h3>
+        <ul>
+          <li>Incident Report</li>
+          <li>Security Footage</li>
+          <li>Bail Application</li>
+        </ul>
+  
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>April 8, 1995</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Male</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>333 Maple St, Northside, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>Associate's Degree in Criminal Justice</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Retail Worker</td></tr>
+          <tr><td><strong>Family:</strong></td><td>1 Dependent</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>1 Misdemeanor</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Good</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Stable</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>July 25, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>None</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Limited Support</td></tr>
+        </table>
+  
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case6-recommendation')">Get Recommendation</button><br>
+        <div id="case6-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case6-probability">55%</span></p>
+          <p>Likelihood of Running Away: <span id="case6-risk">Medium</span></p>
+          <p>Additional Notes: Previous record may affect decision.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case6')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case6')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #007</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 30th September 2024</p>
+    <button class="review-button" onclick="openReview('case7-review')">Review</button>
+    <div id="case7-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case7-review')">&times;</span>
+        <h5>Case Details for David White</h5>
+        <p><strong>Case Number:</strong> 789012</p>
+        <p><strong>Date of Arrest:</strong> August 12, 2023</p>
+        <p><strong>Charges:</strong> DUI</p>
+        <p><strong>Court:</strong> Eastside District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+  
+        <h3>Documents</h3>
+        <ul>
+          <li>Police Report</li>
+          <li>Breathalyzer Results</li>
+          <li>Bail Application</li>
+        </ul>
+  
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>November 22, 1985</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Male</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>444 Oak St, Eastside, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>High School Diploma</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Construction Worker</td></tr>
+          <tr><td><strong>Family:</strong></td><td>2 Dependents</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>None</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Fair</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Needs Assessment</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>August 30, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Alcohol Awareness</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Strong Support</td></tr>
+        </table>
+  
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case7-recommendation')">Get Recommendation</button><br>
+        <div id="case7-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case7-probability">70%</span></p>
+          <p>Likelihood of Running Away: <span id="case7-risk">Low</span></p>
+          <p>Additional Notes: Participation in programs may improve outcome.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case7')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case7')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h4><i class="fas fa-file-alt"></i> Case #008</h4>
+    <p>Status: Pending</p>
+    <p>Filed On: 5th October 2024</p>
+    <button class="review-button" onclick="openReview('case8-review')">Review</button>
+    <div id="case8-review" class="review-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeReview('case8-review')">&times;</span>
+        <h5>Case Details for Emily Johnson</h5>
+        <p><strong>Case Number:</strong> 890123</p>
+        <p><strong>Date of Arrest:</strong> September 15, 2023</p>
+        <p><strong>Charges:</strong> Assault</p>
+        <p><strong>Court:</strong> Southside District Court</p>
+        <p><strong>Bail Status:</strong> Pending</p>
+  
+        <h3>Documents</h3>
+        <ul>
+          <li>Witness Statements</li>
+          <li>Medical Reports</li>
+          <li>Bail Application</li>
+        </ul>
+  
+        <h3>Additional Details</h3>
+        <table>
+          <tr><td><strong>Date of Birth:</strong></td><td>June 30, 1992</td></tr>
+          <tr><td><strong>Gender:</strong></td><td>Female</td></tr>
+          <tr><td><strong>Nationality:</strong></td><td>American</td></tr>
+          <tr><td><strong>Address:</strong></td><td>555 Birch St, Southside, IL</td></tr>
+          <tr><td><strong>Education:</strong></td><td>Associate's Degree in Psychology</td></tr>
+          <tr><td><strong>Employment:</strong></td><td>Social Worker</td></tr>
+          <tr><td><strong>Family:</strong></td><td>1 Dependent</td></tr>
+          <tr><td><strong>Previous Record:</strong></td><td>None</td></tr>
+          <tr><td><strong>Health Status:</strong></td><td>Good</td></tr>
+          <tr><td><strong>Psychological Evaluation:</strong></td><td>Stable</td></tr>
+          <tr><td><strong>Last Hearing Date:</strong></td><td>September 28, 2023</td></tr>
+          <tr><td><strong>Trial Status:</strong></td><td>Ongoing</td></tr>
+          <tr><td><strong>Educational Programs:</strong></td><td>Conflict Resolution</td></tr>
+          <tr><td><strong>Family Support:</strong></td><td>Regular Visits</td></tr>
+        </table>
+  
+        <h3>Recommendations</h3>
+        <button class="recommendation-button" onclick="showRecommendation('case8-recommendation')">Get Recommendation</button><br>
+        <div id="case8-recommendation" style="display: none;">
+          <p>Probability of Bail Approval: <span id="case8-probability">65%</span></p>
+          <p>Likelihood of Running Away: <span id="case8-risk">Medium</span></p>
+          <p>Additional Notes: Assess community ties.</p>
+        </div>
+        <div class="bail-buttons">
+          <button class="bail-button" onclick="acceptBail('case8')">Accept Bail</button>
+          <button class="bail-button" onclick="rejectBail('case8')">Reject Bail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Add more cases similarly -->
+</div>
+
+<style>
+  .review-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em; 
+    width: 55px; 
+  }
+
+  .recommendation-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #28a745; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em; 
+  }
+
+  .bail-buttons {
+    margin-top: 15px; 
+  }
+
+  .bail-button {
+    padding: 5px;
+    font-size: 0.8em; 
+    margin-right: 10px; 
+    background-color: #ffc107; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .review-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); 
+    display: flex; /* Flexbox for centering */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px; 
+    max-height: 80vh; 
+    overflow-y: auto; 
+    border-radius: 10px;
+    position: relative;
+    text-align: justify; 
+    font-size: 0.9em; 
+    top: 50%; 
+    transform: translateY(-50%); 
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px; 
+    font-size: 0.9em; 
+  }
+
+  th, td {
+    font-size: medium;
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+</style>
+
+<script>
+  function openReview(reviewId) {
+    const reviewSection = document.getElementById(reviewId);
+    reviewSection.style.display = 'block';
+  }
+
+  function closeReview(reviewId) {
+    const reviewSection = document.getElementById(reviewId);
+    reviewSection.style.display = 'none';
+  }
+
+  function showRecommendation(recommendationId) {
+    const recommendationSection = document.getElementById(recommendationId);
+    recommendationSection.style.display = 'block';
+  }
+
+  function acceptBail(caseId) {
+    if (confirm(`Are you sure you want to accept bail for Case #${caseId.split('case')[1]}?`)) {
+      alert(`Bail accepted for Case #${caseId.split('case')[1]}.`);
+      closeReview(`${caseId}-review`);
+    }
+  }
+
+  function rejectBail(caseId) {
+    if (confirm(`Are you sure you want to reject bail for Case #${caseId.split('case')[1]}?`)) {
+      alert(`Bail rejected for Case #${caseId.split('case')[1]}.`);
+      closeReview(`${caseId}-review`);
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+      <!-- Decisions Section -->
+      <div class="cards-container" id="decisions-content" style="display: none;">
+        <h3>Recent Decisions</h3>
+        <div class="card decision completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #001</h4>
+          <p>Date: 5th October 2024</p>
+          <p>Verdict: Guilty</p>
+        </div>
+        <div class="card decision not-completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #002</h4>
+          <p>Date: 15th September 2024</p>
+          <p>Verdict: Not Guilty</p>
+        </div>
+        <div class="card decision completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #003</h4>
+          <p>Date: 20th September 2024</p>
+          <p>Verdict: Guilty</p>
+        </div>
+        <div class="card decision not-completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #004</h4>
+          <p>Date: 10th October 2024</p>
+          <p>Verdict: Pending</p>
+        </div>
+        <div class="card decision completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #005</h4>
+          <p>Date: 1st October 2024</p>
+          <p>Verdict: Guilty</p>
+        </div>
+        <div class="card decision not-completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #006</h4>
+          <p>Date: 15th October 2024</p>
+          <p>Verdict: Pending</p>
+        </div>
+        <div class="card decision completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #007</h4>
+          <p>Date: 30th September 2024</p>
+          <p>Verdict: Not Guilty</p>
+        </div>
+        <div class="card decision completed">
+          <h4><i class="fas fa-gavel"></i> Decision on Case #008</h4>
+          <p>Date: 25th September 2024</p>
+          <p>Verdict: Guilty</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    const undertrailPrisoners = [
-      { id: "UT-1234", name: "John Doe", age: 35, charge: "Unauthorized Access", nextHearing: "2024-10-01" },
-      { id: "UT-5678", name: "Jane Smith", age: 28, charge: "Data Theft", nextHearing: "2024-09-15" },
-      { id: "UT-9012", name: "Mike Johnson", age: 42, charge: "Cyberstalking", nextHearing: "2024-11-10" },
-    ];
-
-    // Function to show and hide content based on the tab clicked
-    function showTab(tab) {
-      document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
-      document.getElementById(content-${tab}).style.display = 'block';
-
-      document.querySelectorAll('nav button').forEach(button => button.classList.remove('active'));
-      document.getElementById(tab-${tab}).classList.add('active');
+    function logout() {
+      window.location.href = 'index.html'; // Redirect to the login or home page
     }
 
-    // Function to search prisoners
-    function searchPrisoners() {
-      const searchQuery = document.getElementById('prisonerSearch').value.toLowerCase();
-      const results = undertrailPrisoners.filter(prisoner => prisoner.name.toLowerCase().includes(searchQuery));
-      console.log(results); // You can add logic to display results
+    function switchTab(tabName) {
+      const contents = document.querySelectorAll('.cards-container');
+
+      contents.forEach(content => {
+        content.style.display = 'none'; // Hide all content
+      });
+
+      // Show active content
+      const activeContent = document.getElementById(tabName + '-content');
+      if (activeContent) {
+        activeContent.style.display = 'block'; // Show active content
+      }
     }
 
-    // Display the upcoming hearings
-    const upcomingHearings = document.getElementById('upcoming-hearings');
-    undertrailPrisoners.forEach(prisoner => {
-      upcomingHearings.innerHTML += `
-        <div class="prisoner-card">
-          <h4>${prisoner.name}</h4>
-          <p><strong>ID:</strong> ${prisoner.id}</p>
-          <p><strong>Charge:</strong> ${prisoner.charge}</p>
-          <p><strong>Next Hearing:</strong> ${prisoner.nextHearing}</p>
-        </div>
-      `;
-    });
+    // Initialize by showing the home content
+    switchTab('home');
+    function toggleDetails(caseId) {
+  const details = document.getElementById(caseId);
+  details.style.display = details.style.display === 'none' ? 'block' : 'none';
+}
 
-    // Display pending decisions
-    const pendingDecisions = document.getElementById('pending-decisions');
-    undertrailPrisoners.forEach(prisoner => {
-      pendingDecisions.innerHTML += `
-        <div class="prisoner-card">
-          <h4>${prisoner.name}</h4>
-          <p><strong>ID:</strong> ${prisoner.id}</p>
-          <p><strong>Charge:</strong> ${prisoner.charge}</p>
-          <p><strong>Next Hearing:</strong> ${prisoner.nextHearing}</p>
-          <button>Grant Bail</button>
-          <button>Deny Bail</button>
-        </div>
-      `;
-    });
+function toggleDetails(caseId) {
+  const details = document.getElementById(caseId);
+  details.style.display = details.style.display === 'none' ? 'block' : 'none';
+}
+
+
   </script>
 </body>
 </html>
