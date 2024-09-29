@@ -115,8 +115,9 @@ function switchTab(tab) {
     else if (tab === 'caseDetails') {
         content.innerHTML = `
           <div class="profile-container">
+          <div class="documents-section">
             <div class="profile-header">
-              <h1 class="client-name">John Doe</h1>
+              <h1 class="client-name">Rohan Kumar</h1>
             </div>
             <div class="client-details">
               <p><strong>Case Number:</strong> 123456</p>
@@ -125,6 +126,7 @@ function switchTab(tab) {
               <p><strong>Court:</strong> Springfield District Court</p>
               <p><strong>Bail Status:</strong> Pending</p>
             </div>
+            </div?
             <div class="documents-section">
               <h2>Documents</h2>
               <ul>

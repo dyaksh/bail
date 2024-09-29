@@ -118,7 +118,7 @@
 
     <!-- Top Navbar -->
     <div class="navbar">
-      <h1>Judicial Authority</h1>
+      <h1>Bail Reckoner</h1>
       <div class="icon-container">
         <i class="fas fa-search icon search-icon"></i>
         <i class="fas fa-bell icon" onclick="switchTab('notifications')"></i>
@@ -159,10 +159,7 @@
           <h4><i class="fas fa-exclamation-triangle"></i> Important Policy Change</h4>
           <p>Changes to case filing procedures effective from November 1, 2024.</p>
         </div>
-        <div class="card">
-          <h4><i class="fas fa-briefcase"></i> Job Openings</h4>
-          <p>Several new positions are open in the administration department.</p>
-        </div>
+        
         <div class="card">
           <h4><i class="fas fa-calendar-alt"></i> Upcoming Legal Seminar</h4>
           <p>A legal seminar is scheduled for November 10, 2024, all are encouraged to attend.</p>
@@ -271,9 +268,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case1-recommendation')">Get Recommendation</button><br>
         <div id="case1-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case1-probability">75%</span></p>
-          <p>Likelihood of Running Away: <span id="case1-risk">Low</span></p>
-          <p>Additional Notes: Consider the suspect's ties to the community.</p>
+          <p>Crime: Theft (Section 379 IPC)</p>
+          <p>Recommendation: Grant Bail</p>
+          <p>Reasoning: First-time offender, non-violent crime, minimal societal harm. Surety required and court appearance mandated.</p>
+          <p>Probability of Bail: 85%</p>
+          <p>Factors Increasing Probability:</p>
+          <ul>
+            <li>First-time offender.</li>
+            <li>Non-violent crime.</li>
+          </ul>
+          <p>Risk Level: Low</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case1')">Accept Bail</button>
@@ -326,9 +330,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case2-recommendation')">Get Recommendation</button><br>
         <div id="case2-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case2-probability">65%</span></p>
-          <p>Likelihood of Running Away: <span id="case2-risk">Medium</span></p>
-          <p>Additional Notes: Evaluate the suspect's mental state.</p>
+          <p>Crime: Theft (Section 379 IPC)</p>
+          <p>Recommendation: Grant Bail</p>
+          <p>Reasoning: First-time offender, non-violent crime, minimal societal harm. Surety required and court appearance mandated.</p>
+          <p>Probability of Bail: 85%</p>
+          <p>Factors Increasing Probability:</p>
+          <ul>
+            <li>First-time offender.</li>
+            <li>Non-violent crime.</li>
+          </ul>
+          <p>Risk Level: Low</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case2')">Accept Bail</button>
@@ -381,9 +392,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case3-recommendation')">Get Recommendation</button><br>
         <div id="case3-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case3-probability">50%</span></p>
-          <p>Likelihood of Running Away: <span id="case3-risk">High</span></p>
-          <p>Additional Notes: Assess need for rehabilitation.</p>
+          <p>Crime: Assault (Section 353 IPC)</p>
+          <p>Recommendation: Deny Bail</p>
+          <p>Reasoning: History of violent offenses, failure to comply with previous bail conditions. High risk of re-offending.</p>
+          <p>Probability of Bail: 20%</p>
+          <p>Factors Reducing Probability:</p>
+          <ul>
+            <li>Violent nature of the crime.</li>
+            <li>Repeat offenses and non-compliance with bail conditions.</li>
+          </ul>
+          <p>Risk Level: High</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case3')">Accept Bail</button>
@@ -436,9 +454,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case4-recommendation')">Get Recommendation</button><br>
         <div id="case4-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case4-probability">80%</span></p>
-          <p>Likelihood of Running Away: <span id="case4-risk">Low</span></p>
-          <p>Additional Notes: Consider stable employment history.</p>
+          <p>Crime: Cybercrime (Section 66 IT Act)</p>
+          <p>Recommendation: Grant Bail with Restrictions</p>
+          <p>Reasoning: Non-violent crime, first-time offender, cooperative during the investigation. Restrict internet access and require check-ins.</p>
+          <p>Probability of Bail: 70%</p>
+          <p>Factors Increasing Probability:</p>
+          <ul>
+            <li>First-time offender.</li>
+            <li>Non-violent nature of the crime.</li>
+          </ul>
+          <p>Risk Level: Moderate</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case4')">Accept Bail</button>
@@ -490,9 +515,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case5-recommendation')">Get Recommendation</button><br>
         <div id="case5-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case5-probability">85%</span></p>
-          <p>Likelihood of Running Away: <span id="case5-risk">Low</span></p>
-          <p>Additional Notes: Evaluate family support system.</p>
+          <p>Crime: Fraud (Section 420 IPC)</p>
+          <p>Recommendation: Grant Bail with High Surety</p>
+          <p>Reasoning: Non-violent offense, accused is cooperating with investigators, and assets can be secured. High surety amount and asset freeze recommended.</p>
+          <p>Probability of Bail: 80%</p>
+          <p>Factors Increasing Probability:</p>
+          <ul>
+            <li>Cooperative behavior with investigators.</li>
+            <li>Assets can be secured by the court.</li>
+          </ul>
+          <p>Risk Level: Low</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case5')">Accept Bail</button>
@@ -545,9 +577,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case6-recommendation')">Get Recommendation</button><br>
         <div id="case6-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case6-probability">55%</span></p>
-          <p>Likelihood of Running Away: <span id="case6-risk">Medium</span></p>
-          <p>Additional Notes: Previous record may affect decision.</p>
+          <p>Crime: Rape (Section 376 IPC)</p>
+          <p>Recommendation: Deny Bail</p>
+          <p>Reasoning: The crime is serious and heinous, and public safety and witness tampering risks are high.</p>
+          <p>Probability of Bail: 15%</p>
+          <p>Factors Reducing Probability:</p>
+          <ul>
+            <li>Heinous nature of the crime.</li>
+            <li>High risk to public safety.</li>
+          </ul>
+          <p>Risk Level: High</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case6')">Accept Bail</button>
@@ -600,9 +639,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case7-recommendation')">Get Recommendation</button><br>
         <div id="case7-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case7-probability">70%</span></p>
-          <p>Likelihood of Running Away: <span id="case7-risk">Low</span></p>
-          <p>Additional Notes: Participation in programs may improve outcome.</p>
+          <p>Crime: Forgery (Section 465 IPC)</p>
+          <p>Recommendation: Grant Bail</p>
+          <p>Reasoning: First-time offender, non-violent offense, and no significant public threat. Surrender passport and provide financial surety.</p>
+          <p>Probability of Bail: 90%</p>
+          <p>Factors Increasing Probability:</p>
+          <ul>
+            <li>First-time offender.</li>
+            <li>Non-violent crime.</li>
+          </ul>
+          <p>Risk Level: Low</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case7')">Accept Bail</button>
@@ -655,9 +701,16 @@
         <h3>Recommendations</h3>
         <button class="recommendation-button" onclick="showRecommendation('case8-recommendation')">Get Recommendation</button><br>
         <div id="case8-recommendation" style="display: none;">
-          <p>Probability of Bail Approval: <span id="case8-probability">65%</span></p>
-          <p>Likelihood of Running Away: <span id="case8-risk">Medium</span></p>
-          <p>Additional Notes: Assess community ties.</p>
+          <p>Crime: Robbery (Section 392 IPC)</p>
+          <p>Recommendation: Deny Bail</p>
+          <p>Reasoning: Violent crime, past offenses indicate a likelihood of re-offending.</p>
+          <p>Probability of Bail: 25%</p>
+          <p>Factors Reducing Probability:</p>
+          <ul>
+            <li>Violent nature of the crime.</li>
+            <li>History of repeat offenses.</li>
+          </ul>
+          <p>Risk Level: High</p>
         </div>
         <div class="bail-buttons">
           <button class="bail-button" onclick="acceptBail('case8')">Accept Bail</button>
